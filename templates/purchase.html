@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title_block %} Sell Product {% endblock %}
+
+{% block body_block %}
+    
+    <h2>Customer Order Details</h2>
+    <img src={{order.qr_code.url}}>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>  
+        </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{order.customername}}</td>
+                    <td>{{order.customerphone}}</td>
+                    <td>{{order.customeremail}}</td>
+                </tr>
+            
+        </thead>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Count</th>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col>">Total Price</th>
+        </tr>
+        
+        </thead>
+        <tbody>
+    {% for item in cart_items %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{item.item.name}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.item.price}}</td>
+            <td>{{item.get_total}}</td>
+            <td></td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <th scope="row"></th>
+        <td colspan="2">Total</td>
+        <td align="right">&#2547; {{order.get_totals | floatformat:2 }}</td>
+        <td></td>
+      </tr>
+        
+        </tbody>
+    </table>
+
+
+{% endblock %}

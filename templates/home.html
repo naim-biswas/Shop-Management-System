@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} Sell Product {% endblock %}
+
+{% block body_block %}
+    
+    <form method = "POST" action =''>
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type = 'submit',value = 'Search'/>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Count</th>
+            <th scope="col">Name</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Stock</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in product %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td><a href="{% url 'add' pk=product.pk %}">{{product.name}}</a></td>
+            <td>{{product.price}}</td>
+            <td>{{product.stock}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+
+
+
+

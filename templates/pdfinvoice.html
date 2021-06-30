@@ -1,0 +1,79 @@
+<html>
+<head>
+<style>
+    @page {
+        size: a4 portrait;
+        @frame header_frame {           /* Static Frame */
+            -pdf-frame-content: header_content;
+            left: 50pt; width: 512pt; top: 50pt; height: 40pt;
+        }
+        @frame content_frame {          /* Content Frame */
+            left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+        }
+        @frame footer_frame {           /* Another static Frame */
+            -pdf-frame-content: footer_content;
+            left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+        }
+    }
+   
+    table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+
+</style>
+</head>
+
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+       <h1 style="font-size:30px;text-align:center"> Order Details </h1>
+    </div>
+
+    
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content">(c) - page <pdf:pagenumber>
+        of <pdf:pagecount>
+    </div>
+
+    <!-- HTML Content -->
+    <img src="{{base_dir}}{{order.qr_code.url}}">
+   <table>
+  <thead>
+        <tr>
+            <th>Count</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+        </tr>
+        
+        </thead>
+  {% for item in cart_items %}
+        <tr>
+            <th>{{forloop.counter}}</th>
+            <td>{{item.item.name}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.item.price}}</td>
+            <td>{{item.get_total}}</td>
+            <td></td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="4">Total</td>
+        <td align="right">&#2547; {{order.get_totals | floatformat:2 }}</td>
+      </tr>
+</table>
+</body>
+</html>
